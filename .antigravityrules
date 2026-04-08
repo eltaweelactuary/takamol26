@@ -1,0 +1,8 @@
+# Takamol26 Project Rules
+
+- **Execution**: Strictly follow the parent `.antigravityrules` termination protocol (`cmd /c`).
+- **Domain**: Insurance Brokerage Platform.
+- **Standards**: 
+    - Use "Takamol Red" and professional grays.
+    - Glassmorphism for all form containers.
+    - Integration with Google Sheets for application data.

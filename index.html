@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تكامل 26 | وساطة تأمين ذكية</title>
+    <meta name="description" content="تكامل 26 هي منصة رقمية تقدم حلول تأمينية مبتكرة للأفراد والشركات في مصر.">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Almarai:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                تكامل <span>26</span>
+            </div>
+            <div class="nav-actions">
+                <button class="btn btn-primary open-form-btn">اطلب عرض سعر</button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="animate-reveal">حلول تأمينية <span>متكاملة</span> تمنحك الأمان</h1>
+            <p class="animate-reveal" style="animation-delay: 0.2s">بوابتك الرقمية للحصول على أفضل عروض التأمين (طبي، سيارات، ممتلكات) بأقل تكلفة وأعلى جودة.</p>
+            <div class="hero-btns animate-reveal" style="animation-delay: 0.4s">
+                <button class="btn btn-primary open-form-btn">ابدأ طلبك الآن</button>
+                <button class="btn btn-glass">اكتشف خدماتنا</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="container">
+        <div class="insurance-grid">
+            <div class="card">
+                <i class="fas fa-car"></i>
+                <h3>تأمين السيارات</h3>
+                <p>تغطية شاملة ضد الحوادث والسرقة والمسؤولية المدنية.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-hospital-user"></i>
+                <h3>التأمين الطبي</h3>
+                <p>أفضل الشبكات الطبية للأفراد والعائلات والشركات.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-building"></i>
+                <h3>تأمين الممتلكات</h3>
+                <p>حماية منشأتك ضد الحريق والسطو والمخاطر الطبيعية.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-heart"></i>
+                <h3>تأمين الحياة</h3>
+                <p>خطط ادخارية وحماية مالية لمستقبل عائلتك.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Form Modal -->
+    <div id="formModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            
+            <div class="step-indicator">
+                <div class="dot active" data-step="1"></div>
+                <div class="dot" data-step="2"></div>
+                <div class="dot" data-step="3"></div>
+                <div class="dot" data-step="4"></div>
+                <div class="dot" data-step="5"></div>
+            </div>
+
+            <form id="takamolForm">
+                <!-- Step 1: User Type -->
+                <div class="form-step active" data-step="1">
+                    <h2 style="margin-bottom: 20px;">من أنت؟</h2>
+                    <div class="form-group">
+                        <label>نوع مقدم الطلب</label>
+                        <select name="userType" id="userType" required>
+                            <option value="">اختر النوع...</option>
+                            <option value="individual">فرد (Retail)</option>
+                            <option value="corporate">شركة (Corporate)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Step 2: KYC -->
+                <div class="form-step" data-step="2">
+                    <h2 id="step2Title" style="margin-bottom: 20px;">بيانات العميل</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label id="nameLabel">الاسم الكامل</label>
+                            <input type="text" name="customerName" required>
+                        </div>
+                        <div class="form-group">
+                            <label id="idLabel">الرقم القومي / السجل التجاري</label>
+                            <input type="text" name="customerID" required>
+                        </div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>رقم الهاتف</label>
+                            <input type="tel" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label>البريد الإلكتروني</label>
+                            <input type="email" name="email" required>
+                        </div>
+                    </div>
+                    <div id="corporateOnlyFields" style="display: none;">
+                        <div class="form-group">
+                            <label>الشكل القانوني للشركة</label>
+                            <select name="legalForm">
+                                <option value="مساهمة">شركة مساهمة</option>
+                                <option value="مسؤولية محدودة">شركة ذات مسؤولية محدودة</option>
+                                <option value="توصية">شركة توصية</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Insurance Type Selection -->
+                <div class="form-step" data-step="3">
+                    <h2 style="margin-bottom: 20px;">ماذا تريد أن تؤمن؟</h2>
+                    <div class="form-group">
+                        <label>نوع التغطية المطلوبة</label>
+                        <select name="insuranceType" id="insuranceType" required>
+                            <option value="">اختر...</option>
+                            <!-- Options will be populated by JS -->
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Step 4: Technical Specs -->
+                <div class="form-step" data-step="4">
+                    <h2 style="margin-bottom: 20px;">بيانات التأمين الفنية</h2>
+                    <div id="dynamicSpecsContainer">
+                        <!-- Content will change based on selection -->
+                    </div>
+                </div>
+
+                <!-- Step 5: Final & Declaration -->
+                <div class="form-step" data-step="5">
+                    <h2 style="margin-bottom: 20px;">الإقرارات والموافقة</h2>
+                    <div class="form-group" style="background: rgba(15, 23, 42, 0.05); padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+                        <p style="font-size: 0.9rem; color: var(--text-muted);">
+                            أقر أنا الموقع أدناه بأن جميع البيانات المذكورة أعلاه صحيحة وتحت مسؤوليتي الشخصية، 
+                            وأوافق على مشاركة هذه البيانات مع شركات التأمين بهدف الحصول على عروض أسعار.
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" required style="width: 20px;"> أوافق على شروط الخدمة وسياسة الخصوصية
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-navigation" style="display: flex; justify-content: space-between; margin-top: 30px;">
+                    <button type="button" id="prevBtn" class="btn btn-glass" style="color: var(--primary); display: none;">السابق</button>
+                    <button type="button" id="nextBtn" class="btn btn-primary" style="margin-right: auto;">التالي</button>
+                    <button type="submit" id="submitBtn" class="btn btn-primary" style="margin-right: auto; display: none;">تقديم الطلب</button>
+                </div>
+            </form>
+
+            <div id="successMsg" style="display: none; text-align: center; padding: 40px;">
+                <i class="fas fa-check-circle" style="font-size: 4rem; color: var(--success); margin-bottom: 20px;"></i>
+                <h2>تم إرسال طلبك بنجاح!</h2>
+                <p>سيقوم فريق تكامل 26 بمراجعة طلبك وتقديم أفضل عروض الأسعار لك في أقرب وقت.</p>
+                <button class="btn btn-primary mt-20" onclick="location.reload()">إغلاق</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; text-align: right; margin-bottom: 40px;">
+                <div>
+                    <div class="logo" style="margin-bottom: 20px; color: var(--white);">
+                        <i class="fas fa-shield-alt"></i>
+                        تكامل <span>26</span>
+                    </div>
+                    <p style="opacity: 0.7; font-size: 0.9rem;">شريكك الموثوق في عالم التأمين. حلول ذكية، تغطية شاملة، وراحة بال تدوم.</p>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 20px;">روابط سريعة</h4>
+                    <ul style="list-style: none; opacity: 0.8; font-size: 0.9rem;">
+                        <li style="margin-bottom: 10px;"><a href="#" style="color: white; text-decoration: none;">عن الشركة</a></li>
+                        <li style="margin-bottom: 10px;"><a href="#" style="color: white; text-decoration: none;">أنواع التأمين</a></li>
+                        <li style="margin-bottom: 10px;"><a href="#" style="color: white; text-decoration: none;">تواصل معنا</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 20px;">اتصل بنا</h4>
+                    <p style="opacity: 0.8; font-size: 0.9rem; margin-bottom: 10px;"><i class="fas fa-phone"></i> +20 123 456 789</p>
+                    <p style="opacity: 0.8; font-size: 0.9rem;"><i class="fas fa-envelope"></i> info@takamol26.com</p>
+                </div>
+            </div>
+            <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+                <p>جميع الحقوق محفوظة &copy; 2026 تكامل 26 (Takamol26)</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>

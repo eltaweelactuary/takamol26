@@ -74,6 +74,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     nextBtn.onclick = () => {
         if (validateStep()) {
+            if (window.tracker) {
+                tracker.event('takamol26_step_complete', {
+                    step: currentStep,
+                    next_step: currentStep + 1
+                });
+            }
             currentStep++;
             updateStep();
             modal.scrollTo(0, 0);
@@ -270,10 +276,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 successMsg.style.display = 'block';
                 modal.scrollTo(0, 0);
                 successMsg.classList.add('animate-reveal');
+                if (window.tracker) {
+                    tracker.event('takamol26_submission_success', {
+                        insurance_type: data.insuranceType || '',
+                        user_type: data.userType || ''
+                    });
+                }
             }, 800);
 
         } catch (error) {
             console.error('Error:', error);
+            if (window.tracker) {
+                tracker.event('takamol26_submission_error', { error: error.message });
+            }
             alert('حدث خطأ أثناء الإرسال، يرجى المحاولة لاحقاً');
         } finally {
             submitBtn.disabled = false;

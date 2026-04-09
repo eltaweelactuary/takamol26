@@ -114,6 +114,15 @@
                             <input type="email" name="email" required>
                         </div>
                     </div>
+                    <!-- مستندات الفرد -->
+                    <div id="individualDocs">
+                        <div class="form-group">
+                            <label>📎 صورة البطاقة الوطنية (وجه وظهر)</label>
+                            <input type="file" name="nationalIdDoc" accept="image/*,.pdf" data-doc="true">
+                            <small style="color: var(--text-muted, #888); font-size: 0.8rem;">JPG / PNG / PDF - بحد أقصى 5MB</small>
+                        </div>
+                    </div>
+                    <!-- مستندات الشركة -->
                     <div id="corporateOnlyFields" style="display: none;">
                         <div class="form-group">
                             <label>الشكل القانوني للشركة</label>
@@ -122,6 +131,11 @@
                                 <option value="مسؤولية محدودة">شركة ذات مسؤولية محدودة</option>
                                 <option value="توصية">شركة توصية</option>
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label>📎 صورة السجل التجاري + البطاقة الضريبية</label>
+                            <input type="file" name="commercialRegDoc" accept="image/*,.pdf" data-doc="true">
+                            <small style="color: var(--text-muted, #888); font-size: 0.8rem;">JPG / PNG / PDF - بحد أقصى 5MB</small>
                         </div>
                     </div>
                 </div>

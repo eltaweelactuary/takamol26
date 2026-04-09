@@ -2,7 +2,7 @@
 
 export const CONFIG = {
     // The Spreadsheet ID provided by the user
-    spreadsheetId: "1i_J61EFlu_5gUJOmfVTJI-kiDJJs7CpAWBp28Dq7KOA", 
+    spreadsheetId: "1aAWEDifOhgpQlsU6a4TMm0Lca-2Gp1XYyURNjzvwQx4", 
     sheetGid: "0",
     
     // The Web App URL from Google Apps Script (User needs to paste this after deployment)

@@ -111,17 +111,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const nameLabel = document.getElementById('nameLabel');
         const idLabel = document.getElementById('idLabel');
         const corporateFields = document.getElementById('corporateOnlyFields');
+        const individualDocs = document.getElementById('individualDocs');
 
         if (type === 'corporate') {
             nameLabel.innerText = 'اسم الشركة (كما في السجل)';
             idLabel.innerText = 'رقم السجل التجاري والبطاقة الضريبية';
             corporateFields.style.display = 'block';
+            if (individualDocs) individualDocs.style.display = 'none';
         } else {
             nameLabel.innerText = 'الاسم الرباعي (من البطاقة)';
             idLabel.innerText = 'الرقم القومي (14 رقم)';
             corporateFields.style.display = 'none';
+            if (individualDocs) individualDocs.style.display = 'block';
         }
     };
+
 
     const populateInsuranceOptions = () => {
         const type = userTypeSelect.value;
@@ -157,19 +161,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const grid = (content) => `<div class="form-grid">${content}</div>`;
 
+        const docField = (label, name) => `
+            <div class="form-group">
+                <label>${label}</label>
+                <input type="file" name="${name}" accept="image/*,.pdf" data-doc="true">
+                <small style="color:#888;font-size:0.8rem;">JPG / PNG / PDF</small>
+            </div>`;
+
         switch(insType) {
             case 'individual-car':
                 html = grid(field('ماركة السيارة', 'carMake') + field('الموديل وسنة الصنع', 'carModel')) + 
-                       field('القيمة التقديرية الحالية', 'carValue', 'number');
+                       field('القيمة التقديرية الحالية', 'carValue', 'number') +
+                       grid(docField('📎 صورة رخصة السيارة', 'carLicenseDoc') + 
+                            docField('📎 صورة إستمارة السيارة', 'carRegistrationDoc'));
                 break;
             case 'individual-medical':
                 html = field('تاريخ ميلاد العميل', 'customerDob', 'date') + 
                        `<div class="form-group"><label>هل تعاني من أمراض مزمنة؟</label>
-                        <select name="chronicDiseases"><option value="لا">لا</option><option value="نعم">نعم</option></select></div>`;
+                        <select name="chronicDiseases"><option value="لا">لا</option><option value="نعم">نعم</option></select></div>` +
+                       docField('📎 أي مستند طبي داعم (اختياري)', 'extraDoc');
                 break;
             case 'individual-property':
                 html = field('عنوان العقار بالتفصيل', 'propertyAddress') + 
-                       grid(field('قيمة المبنى الـتأمينية', 'buildingValue', 'number') + 
+                       grid(field('قيمة المبنى التأمينية', 'buildingValue', 'number') + 
                             field('قيمة المحتويات (إن وجد)', 'contentValue', 'number', false));
                 break;
             case 'individual-life':
@@ -205,6 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
         dynamicSpecsContainer.classList.add('animate-reveal');
     };
 
+
     // --- Submit Logic ---
     form.onsubmit = async (e) => {
         e.preventDefault();
@@ -219,23 +234,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
-        data.timestamp = new Date().toLocaleString();
+        data.timestamp = new Date().toLocaleString('ar-EG');
+
+        // تحويل جميع ملفات المستندات إلى Base64
+        const fileInputs = form.querySelectorAll('input[type="file"][data-doc="true"]');
+        const filePromises = Array.from(fileInputs).map(input => {
+            return new Promise((resolve) => {
+                const file = input.files[0];
+                if (!file || file.size === 0) { resolve(); return; }
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const base64 = reader.result.split(',')[1];
+                    data[input.name] = base64;
+                    data[input.name + '_type'] = file.type;
+                    data[input.name + '_name'] = file.name;
+                    resolve();
+                };
+                reader.onerror = () => resolve();
+                reader.readAsDataURL(file);
+            });
+        });
+
+        await Promise.all(filePromises);
 
         try {
             await fetch(CONFIG.googleScriptUrl, {
                 method: 'POST',
                 mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'text/plain' },
                 body: JSON.stringify(data)
             });
             
-            // Add a small delay to make it feel "Premium"
             setTimeout(() => {
                 form.style.display = 'none';
                 successMsg.style.display = 'block';
                 modal.scrollTo(0, 0);
-                
-                // Trigger confetti if library exists or just smooth fade
                 successMsg.classList.add('animate-reveal');
             }, 800);
 

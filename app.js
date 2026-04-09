@@ -1,4 +1,4 @@
-import { CONFIG } from './config.js?v=2';
+import { CONFIG } from './config.js?v=3';
 
 document.addEventListener('DOMContentLoaded', () => {
     let currentStep = 1;

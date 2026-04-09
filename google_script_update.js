@@ -10,6 +10,15 @@ function doPost(e) {
   var adminEmail = 'ahmed.eltaweel.actuary@gmail.com, eltaweel.actuary@gmail.com';
 
   try {
+    // التحقق من وجود البيانات لتجنب الخطأ الذي ظهر (Cannot read properties of undefined)
+    if (!e || !e.postData || !e.postData.contents) {
+      console.warn("Requested without postData. If this is a manual run from the editor, this is normal.");
+      return ContentService.createTextOutput(JSON.stringify({ 
+        status: 'error', 
+        message: 'No post data received. Please submit the form from the website.' 
+      })).setMimeType(ContentService.MimeType.JSON);
+    }
+
     var data = JSON.parse(e.postData.contents);
     var ss = SpreadsheetApp.openById(sheetId);
     var sheet = ss.getSheets()[0];
@@ -117,7 +126,8 @@ function doPost(e) {
       .setMimeType(ContentService.MimeType.JSON);
 
   } catch (err) {
-    return ContentService.createTextOutput(JSON.stringify({ status: 'error', message: err.toString() }))
+    console.error("Error in doPost: " + err.toString() + "\nStack: " + err.stack);
+    return ContentService.createTextOutput(JSON.stringify({ status: 'error', message: err.toString(), stack: err.stack }))
       .setMimeType(ContentService.MimeType.JSON);
   }
 }
